@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Froyo Order App</title>
+</head>
+<body>
+    <h1>Welcome to the Froyo Order App</h1>
+    <p>Please enter your froyo flavors separated by commas:</p>
+    <input type="text" id="flavorsInput" placeholder="e.g., vanilla, vanilla, strawberry, coffee, coffee">
+    <button onclick="processOrder()">Submit Order</button>
+
+    <!-- Display the order summary in a table -->
+    <h2>Order Summary</h2>
+    <table id="orderTable">
+        <thead>
+            <tr>
+                <th>Flavor</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody id="orderBody">
+            <!-- Order details will be displayed here dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        function processOrder() {
+            // Get input value and split it into an array of flavors
+            const inputText = document.getElementById('flavorsInput').value;
+            const flavorsArray = inputText.split(',').map(flavor => flavor.trim());
+
+            // Count the quantity of each flavor
+            const flavorCount = {};
+            flavorsArray.forEach(flavor => {
+                flavorCount[flavor] = (flavorCount[flavor] || 0) + 1;
+            });
+
+            // Display the order summary in the table
+            const orderTableBody = document.getElementById('orderBody');
+            orderTableBody.innerHTML = ''; // Clear previous entries
+
+            for (const flavor in flavorCount) {
+                const quantity = flavorCount[flavor];
+
+                // Create a new row in the table
+                const row = orderTableBody.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+
+                // Set the flavor and quantity in the row
+                cell1.textContent = flavor;
+                cell2.textContent = quantity;
+            }
+
+            // Log the order details to the browser console
+            console.log('Order Summary:', flavorCount);
+        }
+    </script>
+</body>
+</html>
